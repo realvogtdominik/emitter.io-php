@@ -1,7 +1,6 @@
 {
     "name": "bobbymaher/emitter",
     "description": "wrapper for emitter.io around bluerhinos/phpmqtt",
-    "license": "BSD",
     "type": "library",
     "authors": [
         {
