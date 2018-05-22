@@ -1,4 +1,6 @@
-a wrapper for emitter.io around bluerhinos/phpmqtt
+php SDK for publishing to emitter https://emitter.io/
+
+a wrapper around bluerhinos/phpmqtt
 
 currently only publishes
 
