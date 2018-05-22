@@ -16,26 +16,12 @@ class emitter
 
 
     protected $emitter;
-    protected $key;
-    protected $channel;
 
-    public function __construct($server, $port, $key, $channel, $uniqueId = 0)
+
+    public function __construct($server, $port, $uniqueId = 0)
     {
-
         if ($uniqueId == 0) {
-            $uniqueId = sha1(microtime() . $key, $channel);
-        }
-
-        $this->key = $key;
-        $this->channel = $channel;
-
-
-        if (! $this->startsWith($this->channel, '/')) {
-            $this->channel = '/' . $this->channel;
-        }
-
-        if (! $this->endsWith($this->channel, '/')) {
-            $this->channel .= '/';
+            $uniqueId = sha1(microtime());
         }
 
         $username = "";
@@ -44,7 +30,6 @@ class emitter
         if (! $this->emitter->connect(true, NULL, $username, $password)) {
             Throw new \Exception('unable to connect');
         }
-
     }
 
 
@@ -69,9 +54,18 @@ class emitter
         $this->emitter->close();
     }
 
-    public function publish($message)
+    public function publish($key, $channel, $message)
     {
-        $this->emitter->publish($this->key . $this->channel, $message, 0);
+
+        if (! $this->startsWith($channel, '/')) {
+            $channel = '/' . $channel;
+        }
+
+        if (! $this->endsWith($channel, '/')) {
+            $channel .= '/';
+        }
+
+        $this->emitter->publish($key . $channel, $message, 0);
 
     }
 

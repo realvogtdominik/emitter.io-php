@@ -1,5 +1,16 @@
 a wrapper for emitter.io around bluerhinos/phpmqtt
 
+currently only publishes
+
+    $emitter = new emitter('emitter.xyz.com', 8080);
+
+        $emitter->publish(
+            'key-key-key-key',
+            'testchannel',
+            'yoyoyo'
+        );
+
+
 To install via Composer
 -----------------------
 `composer require bobbymaher/emitter`

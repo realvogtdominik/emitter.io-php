@@ -8,5 +8,9 @@ $key = 'key-key-key-key';
 $channel = 'test';
 
 
-$emitter = new emitter($server, $port, $key, $channel);
-$emitter->publish('yoyoyo');
+$emitter = new emitter($server, $port);
+$emitter->publish(
+    $key,
+    $channel,
+    'yoyoyo'
+);
