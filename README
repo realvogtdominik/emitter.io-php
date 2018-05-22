@@ -14,3 +14,7 @@ currently only publishes
 To install via Composer
 -----------------------
 `composer require bobbymaher/emitter`
+
+or add to composer:
+
+ "bobbymaher/emitter": "0.1.*"
