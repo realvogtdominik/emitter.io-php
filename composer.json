@@ -1,12 +1,12 @@
 {
-    "name": "bluerhinos/phpmqtt",
-    "description": "Simple MQTT Class",
+    "name": "bobbymaher/emitter",
+    "description": "wrapper for emitter.io around bluerhinos/phpmqtt",
     "license": "BSD",
     "type": "library",
     "authors": [
         {
-            "name": "Andrew Milsted",
-            "email": "andrew@bluerhinos.co.uk"
+            "name": "Bobby Maher",
+            "email": "bobby.maher@icabbi.com"
         }
     ],
     "minimum-stability": "dev",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bluerhinos\\": "./"
+            "emitter\\": "./"
         }
     }
 }
