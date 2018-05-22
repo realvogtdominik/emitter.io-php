@@ -33,6 +33,19 @@ class emitter
     }
 
 
+    private function parseChannel($channel)
+    {
+        if (! $this->startsWith($channel, '/')) {
+            $channel = '/' . $channel;
+        }
+
+        if (! $this->endsWith($channel, '/')) {
+            $channel .= '/';
+        }
+
+        return $channel;
+    }
+
     private function startsWith($haystack, $needle)
     {
         $length = strlen($needle);
@@ -54,19 +67,35 @@ class emitter
         $this->emitter->close();
     }
 
+
     public function publish($key, $channel, $message)
     {
-
-        if (! $this->startsWith($channel, '/')) {
-            $channel = '/' . $channel;
-        }
-
-        if (! $this->endsWith($channel, '/')) {
-            $channel .= '/';
-        }
-
+        $channel = $this->parseChannel($channel);
         $this->emitter->publish($key . $channel, $message, 0);
-
     }
+
+
+    /** @todo implemeent */
+    /*
+        public function subscribe($key, $channel)
+        {
+
+            $topics[$key . $this->parseChannel($channel)] = array("qos" => 0, "function" => "procmsg");
+            $this->emitter->subscribe($topics, 0);
+
+            while ($this->emitter->proc()) {
+
+            }
+
+        }
+
+        private function procmsg($topic, $msg)
+        {
+            echo "Msg Recieved: " . date("r") . "\n";
+            echo "Topic: {$topic}\n\n";
+            echo "\t$msg\n\n";
+        }
+
+        */
 
 }
