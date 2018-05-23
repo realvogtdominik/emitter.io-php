@@ -8,9 +8,22 @@ $key = 'key-key-key-key';
 $channel = 'test';
 
 
-$emitter = new emitter($server, $port);
+
+$emitter = new \emitter\emitter(array(
+    'server' => $server,
+    'port'   => $port,
+));
+
+
 $emitter->publish(
-    $key,
-    $channel,
-    'yoyoyo'
+    array(
+        'key'     => $key,
+        'channel' => $channel,
+        'ttl' => 5,
+        'message' => array(
+            'blah'    => 'gggg',
+            'name'     => 'jimbob',
+
+        ),
+    )
 );

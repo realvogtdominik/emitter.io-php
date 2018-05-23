@@ -4,28 +4,28 @@ a wrapper around bluerhinos/phpmqtt
 
 currently only publishes
 
-    $emitter = new emitter('emitter.xyz.com', 8080);
 
-        $emitter->publish(
-            'key-key-key-key',
-            'testchannel',
-            'yoyoyo'
-        );
-        
-        
-        
-        or publish an array
-        
-        
-        
-        $emitter->publish(
-            'key-key-key-key',
-            'testchannel',
-            array(
-            'herp' =>'derp',
-            'yo' => 'lo'
-            )
-        );
+        $emitter = new \emitter\emitter(array(
+                'server' => 'emitter.tld',
+                'port'   => '8080',
+            ));
+
+            $emitterChannel = 'test';
+            $emitterKey = 'keykekyguihetgiuhui';
+
+
+            $emitter->publish(
+                array(
+                    'key'     => $emitterKey,
+                    'channel' => $emitterChannel,
+                    'ttl' => 5,
+                    'message' => array(
+                        'blah'    => 'gggg',
+                        'name'     => 'jimbob',
+
+                    ),
+                )
+            );
 
 
 To install via Composer
@@ -34,4 +34,4 @@ To install via Composer
 
 or add to composer:
 
- "bobbymaher/emitter": "0.1.*"
+ "bobbymaher/emitter": "0.2.*"
