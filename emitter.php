@@ -31,7 +31,9 @@ class emitter
         $server = $config['server'];
         $port = $config['port'];
         $uniqueId = isset($config['uniqueId']) ? $config['uniqueId'] : sha1(microtime() . $server . $port);
-        $this->prefix = isset($config['prefix']) ? $config['prefix'] : '';
+        $this->prefix = isset($config['prefix']) ? $this->parsePrefix($config['prefix']) : '';
+
+
 
 
         $username = '';
@@ -43,6 +45,19 @@ class emitter
         return true;
     }
 
+
+    /**
+     * @param string $channel
+     * @return string
+     */
+    private function parsePrefix($prefix)
+    {
+        if (! $this->startsWith($prefix, '/')) {
+            $prefix = '/' . $prefix;
+        }
+
+        return $prefix;
+    }
 
 
     /**
