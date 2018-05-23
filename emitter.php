@@ -6,12 +6,12 @@
  * Time: 12:07
  */
 
-namespace emitter;
+namespace Emitter;
 
 
-use emitter\phpMQTT;
+use Emitter\phpMQTT;
 
-class emitter
+class Emitter
 {
 
 
@@ -19,24 +19,27 @@ class emitter
 
 
     /**
-     * emitter constructor.
-     * @param string $server
-     * @param int $port
-     * @param string $uniqueId
-     * @throws \Exception
+     * Emitter constructor.
+     * @param array $config
      */
-    public function __construct($server, $port, $uniqueId = '')
+    public function __construct(array $config)
     {
-        if ($uniqueId == '') {
-            $uniqueId = sha1(microtime() . $server . $port);
-        }
 
-        $username = "";
-        $password = "";
+        $this->_config = $config;
+
+
+        $server = $config['server'];
+        $port = $config['port'];
+        $uniqueId = isset($config['uniqueId']) ? $config['uniqueId'] : sha1(microtime() . $server . $port);
+
+
+        $username = '';
+        $password = '';
         $this->emitter = new phpMQTT($server, $port, $uniqueId);
         if (! $this->emitter->connect(true, NULL, $username, $password)) {
-            Throw new \Exception('unable to connect');
+            return false;
         }
+        return true;
     }
 
 
@@ -83,7 +86,6 @@ class emitter
     }
 
 
-
     public function disconnect()
     {
         $this->emitter->close();
@@ -91,14 +93,17 @@ class emitter
 
 
     /**
-     * @param string $key
-     * @param string $channel
-     * @param mixed $message
+     * @param array $data
      */
-    public function publish($key, $channel, $message)
+    public function publish(array $data)
     {
+        $key = $data['key'];
+        $channel = $data['channel'];
+        $message = $data['message'];
+
         $channel = $this->parseChannel($channel);
-        if(is_array($message) || is_object($message)){
+
+        if (is_array($message) || is_object($message)) {
             $message = json_encode($message);
         }
         $this->emitter->publish($key . $channel, $message, 0);
