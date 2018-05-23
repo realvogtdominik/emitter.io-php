@@ -71,6 +71,9 @@ class emitter
     public function publish($key, $channel, $message)
     {
         $channel = $this->parseChannel($channel);
+        if(is_array($message) || is_object($message)){
+            $message = json_encode($message);
+        }
         $this->emitter->publish($key . $channel, $message, 0);
     }
 
