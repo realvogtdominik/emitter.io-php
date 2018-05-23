@@ -18,10 +18,17 @@ class emitter
     protected $emitter;
 
 
-    public function __construct($server, $port, $uniqueId = 0)
+    /**
+     * emitter constructor.
+     * @param string $server
+     * @param int $port
+     * @param string $uniqueId
+     * @throws \Exception
+     */
+    public function __construct($server, $port, $uniqueId = '')
     {
-        if ($uniqueId == 0) {
-            $uniqueId = sha1(microtime());
+        if ($uniqueId == '') {
+            $uniqueId = sha1(microtime() . $server . $port);
         }
 
         $username = "";
@@ -33,6 +40,10 @@ class emitter
     }
 
 
+    /**
+     * @param string $channel
+     * @return string
+     */
     private function parseChannel($channel)
     {
         if (! $this->startsWith($channel, '/')) {
@@ -46,6 +57,11 @@ class emitter
         return $channel;
     }
 
+    /**
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
     private function startsWith($haystack, $needle)
     {
         $length = strlen($needle);
@@ -53,6 +69,11 @@ class emitter
         return (substr($haystack, 0, $length) === $needle);
     }
 
+    /**
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
     private function endsWith($haystack, $needle)
     {
         $length = strlen($needle);
@@ -62,12 +83,18 @@ class emitter
     }
 
 
+
     public function disconnect()
     {
         $this->emitter->close();
     }
 
 
+    /**
+     * @param string $key
+     * @param string $channel
+     * @param mixed $message
+     */
     public function publish($key, $channel, $message)
     {
         $channel = $this->parseChannel($channel);
@@ -77,28 +104,5 @@ class emitter
         $this->emitter->publish($key . $channel, $message, 0);
     }
 
-
-    /** @todo implemeent */
-    /*
-        public function subscribe($key, $channel)
-        {
-
-            $topics[$key . $this->parseChannel($channel)] = array("qos" => 0, "function" => "procmsg");
-            $this->emitter->subscribe($topics, 0);
-
-            while ($this->emitter->proc()) {
-
-            }
-
-        }
-
-        private function procmsg($topic, $msg)
-        {
-            echo "Msg Recieved: " . date("r") . "\n";
-            echo "Topic: {$topic}\n\n";
-            echo "\t$msg\n\n";
-        }
-
-        */
 
 }
