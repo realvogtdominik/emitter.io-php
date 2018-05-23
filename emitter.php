@@ -6,12 +6,12 @@
  * Time: 12:07
  */
 
-namespace Emitter;
+namespace emitter;
 
 
-use Emitter\phpMQTT;
+use emitter\phpMQTT;
 
-class Emitter
+class emitter
 {
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Emitter;
+namespace emitter;
 
 /*
  	phpMQTT
