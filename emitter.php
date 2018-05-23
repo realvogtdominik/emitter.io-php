@@ -16,7 +16,7 @@ class emitter
 
 
     protected $emitter;
-
+    protected $prefix = '';
 
     /**
      * Emitter constructor.
@@ -31,6 +31,7 @@ class emitter
         $server = $config['server'];
         $port = $config['port'];
         $uniqueId = isset($config['uniqueId']) ? $config['uniqueId'] : sha1(microtime() . $server . $port);
+        $this->prefix = isset($config['prefix']) ? $this->parsePrefix($config['prefix']) : '';
 
 
         $username = '';
@@ -40,6 +41,20 @@ class emitter
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * @param string $channel
+     * @return string
+     */
+    private function parsePrefix($prefix)
+    {
+        if (! $this->startsWith($prefix, '/')) {
+            $prefix = '/' . $prefix;
+        }
+
+        return $prefix;
     }
 
 
@@ -98,10 +113,14 @@ class emitter
     public function publish(array $data)
     {
         $key = $data['key'];
-        $channel = $data['channel'];
+        $channel = $this->prefix . $this->parseChannel($data['channel']);
         $message = $data['message'];
 
-        $channel = $this->parseChannel($channel);
+        $ttl = isset($data['ttl']) ? $data['ttl'] : '0';
+
+        $channel.= '?ttl=' . $ttl;
+
+
 
         if (is_array($message) || is_object($message)) {
             $message = json_encode($message);
