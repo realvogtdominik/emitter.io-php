@@ -1,8 +1,18 @@
-php SDK for publishing to emitter https://emitter.io/
+# A php SDK for publishing to emitter https://emitter.io/
+
+
+To install via Composer
+-----------------------
+- `composer require bobbymaher/emitter`
+
+or add to composer:
+
+ - "bobbymaher/emitter": "0.2.*"
+
+
 
 a wrapper around bluerhinos/phpmqtt
-
-currently only publishes
+it currently only publishes, if you want to add features open a PR
 
 
         $emitter = new \emitter\emitter(array(
@@ -27,11 +37,3 @@ currently only publishes
                 )
             );
 
-
-To install via Composer
------------------------
-`composer require bobbymaher/emitter`
-
-or add to composer:
-
- "bobbymaher/emitter": "0.2.*"
