@@ -10,7 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3"
+        "php": ">=7.4",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
