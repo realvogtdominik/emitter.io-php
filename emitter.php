@@ -9,14 +9,12 @@
 namespace emitter;
 
 
-use emitter\phpMQTT;
-
 class emitter
 {
 
 
-    protected $emitter;
-    protected $prefix = '';
+    protected phpMQTT $emitter;
+    protected string $prefix = '';
 
     /**
      * Emitter constructor.
